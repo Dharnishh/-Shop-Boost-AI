@@ -40,19 +40,19 @@ const BottomNavigation = () => {
   ];
   
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-lg border-t border-white/10 flex justify-around items-center h-16 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 glass-nav flex justify-around items-center h-18 z-50 animate-fade-in">
       {navItems.map((item) => (
         <Link
           key={item.path}
           to={item.path}
           className={cn(
-            'flex flex-col items-center justify-center px-3 transition-all duration-200',
+            'flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 rounded-2xl',
             item.isPrimary ? 'transform -translate-y-6' : '',
             isActive(item.path) && !item.isPrimary ? 'text-neon-purple' : 'text-muted-foreground'
           )}
         >
           {item.isPrimary ? (
-            <div className="bg-gradient-to-r from-neon-purple to-neon-pink rounded-full p-4 btn-glow-pink">
+            <div className="bg-gradient-primary rounded-full p-4 btn-glow-pink animate-pulse">
               <item.icon size={24} className="text-white" />
             </div>
           ) : (
@@ -63,7 +63,12 @@ const BottomNavigation = () => {
                   ? "text-glow" 
                   : "text-muted-foreground"
               )} />
-              <span className="text-xs mt-1">{item.label}</span>
+              <span className={cn(
+                "text-xs mt-1 transition-all duration-200",
+                isActive(item.path) && "font-medium"
+              )}>
+                {item.label}
+              </span>
             </>
           )}
         </Link>
