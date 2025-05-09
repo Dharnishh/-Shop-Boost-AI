@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import i18n from '@/i18n';
+import { useToast } from "@/hooks/use-toast";
 
 interface OnboardingStep {
   title: string;
@@ -16,12 +17,18 @@ interface OnboardingStep {
 const Onboarding: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [language, setLanguage] = useState(i18n.language);
 
   const handleLanguageChange = (value: string) => {
     setLanguage(value);
     i18n.changeLanguage(value);
+    toast({
+      title: t('Language Changed'),
+      description: t('The language has been updated successfully'),
+      duration: 2000,
+    });
   };
 
   const onboardingSteps: OnboardingStep[] = [
@@ -52,6 +59,11 @@ const Onboarding: React.FC = () => {
       setCurrentStep(currentStep + 1);
     } else {
       // Go to home page when onboarding is complete
+      toast({
+        title: t('Welcome to SocialGlow!'),
+        description: t('Your social media journey starts now'),
+        duration: 3000,
+      });
       navigate('/');
     }
   };
@@ -64,7 +76,7 @@ const Onboarding: React.FC = () => {
       <div className="mb-8">
         <p className="text-sm mb-2">{t('language')}</p>
         <Select value={language} onValueChange={handleLanguageChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full bg-secondary/80 border-accent/30">
             <SelectValue placeholder="Select Language" />
           </SelectTrigger>
           <SelectContent>
@@ -77,9 +89,9 @@ const Onboarding: React.FC = () => {
       </div>
 
       {/* Onboarding content */}
-      <Card className="flex-1 flex flex-col items-center justify-center p-6 bg-secondary border-accent text-center">
-        <div className="text-7xl mb-6">{onboardingSteps[currentStep].image}</div>
-        <h1 className="text-2xl font-bold mb-4">{onboardingSteps[currentStep].title}</h1>
+      <Card className="flex-1 flex flex-col items-center justify-center p-6 bg-secondary/80 border-accent/30 text-center animate-fade-in shadow-lg">
+        <div className="text-7xl mb-6 animate-bounce">{onboardingSteps[currentStep].image}</div>
+        <h1 className="text-2xl font-bold mb-4 text-glow">{onboardingSteps[currentStep].title}</h1>
         <p className="text-lg mb-8">{onboardingSteps[currentStep].description}</p>
       </Card>
 
@@ -88,8 +100,8 @@ const Onboarding: React.FC = () => {
         {onboardingSteps.map((_, index) => (
           <div
             key={index}
-            className={`h-2 w-2 rounded-full mx-1 ${
-              index === currentStep ? 'bg-neon-purple w-6' : 'bg-gray-600'
+            className={`h-2 rounded-full mx-1 transition-all duration-300 ${
+              index === currentStep ? 'bg-neon-purple w-8' : 'bg-gray-600 w-2'
             }`}
           />
         ))}
@@ -98,7 +110,7 @@ const Onboarding: React.FC = () => {
       {/* Navigation buttons */}
       <Button
         onClick={handleContinue}
-        className="w-full py-6 text-lg bg-gradient-to-r from-neon-purple to-neon-pink text-white btn-glow"
+        className="w-full py-6 text-lg bg-gradient-to-r from-neon-purple to-neon-pink text-white btn-glow-pink hover:scale-105 transition-transform"
       >
         {isLastStep ? t('Get Started') : t('Continue')}
       </Button>

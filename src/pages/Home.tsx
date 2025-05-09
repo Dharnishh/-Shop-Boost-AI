@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/card';
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data for connected accounts
 const mockAccounts = [
@@ -76,24 +77,33 @@ const platformIcons = {
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const [accounts] = useState(mockAccounts);
+  const { toast } = useToast();
   
   const totalPosts = accounts.reduce((sum, account) => sum + account.posts, 0);
   const activePlatforms = accounts.length;
 
+  const handleCardClick = (platform: string) => {
+    toast({
+      title: t('Account Selected'),
+      description: t(`${platform} account details opened`),
+      duration: 2000,
+    });
+  };
+
   return (
     <div className="p-4 mb-16">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-glow animate-glow">{t('welcome')}</h1>
+        <h1 className="text-3xl font-bold text-glow animate-pulse">{t('welcome')}</h1>
       </div>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <Card className="bg-secondary border-accent p-4 rounded-xl shadow-lg">
-          <div className="text-5xl font-bold text-center text-neon-purple">{totalPosts}</div>
+        <Card className="bg-secondary/80 border-accent/50 p-4 rounded-xl shadow-lg hover:shadow-xl hover:shadow-neon-purple/20 transition-all hover:scale-105">
+          <div className="text-5xl font-bold text-center text-glow">{totalPosts}</div>
           <div className="text-center mt-2 text-sm">{t('totalPosts')}</div>
         </Card>
-        <Card className="bg-secondary border-accent p-4 rounded-xl shadow-lg">
-          <div className="text-5xl font-bold text-center text-neon-pink">{activePlatforms}</div>
+        <Card className="bg-secondary/80 border-accent/50 p-4 rounded-xl shadow-lg hover:shadow-xl hover:shadow-neon-pink/20 transition-all hover:scale-105">
+          <div className="text-5xl font-bold text-center text-glow-pink">{activePlatforms}</div>
           <div className="text-center mt-2 text-sm">{t('activePlatforms')}</div>
         </Card>
       </div>
@@ -102,10 +112,12 @@ const Home: React.FC = () => {
       
       {/* Connected Accounts */}
       <div className="space-y-4">
-        {accounts.map((account) => (
+        {accounts.map((account, index) => (
           <Card 
             key={account.id} 
-            className="flex flex-col overflow-hidden rounded-xl shadow-lg"
+            className={`flex flex-col overflow-hidden rounded-xl shadow-lg animate-fade-in hover:shadow-xl transition-transform hover:scale-[1.02] cursor-pointer`}
+            style={{ animationDelay: `${index * 100}ms` }}
+            onClick={() => handleCardClick(account.platform)}
           >
             <div className={`p-4 bg-gradient-to-r ${platformColors[account.platform as keyof typeof platformColors] || 'from-gray-700 to-gray-600'}`}>
               <div className="flex justify-between items-center">
@@ -147,8 +159,8 @@ const Home: React.FC = () => {
       
       {/* Best Performing Content */}
       <h2 className="text-xl font-semibold mt-6 mb-4">{t('bestContent')}</h2>
-      <Card className="rounded-xl overflow-hidden shadow-lg bg-secondary border-accent">
-        <div className="aspect-video bg-black flex items-center justify-center">
+      <Card className="rounded-xl overflow-hidden shadow-lg bg-secondary/80 border-accent/50 hover:shadow-xl hover:shadow-neon-purple/20 transition-all">
+        <div className="aspect-video bg-black/50 flex items-center justify-center">
           <div className="text-xl opacity-50">📸 {t('bestContent')}</div>
         </div>
         <div className="p-4">
