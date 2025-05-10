@@ -19,6 +19,7 @@ export default {
         'md': '768px',
         'lg': '1024px',
         'xl': '1280px',
+        '2xl': '1536px',
       }
     },
     extend: {
@@ -113,7 +114,18 @@ export default {
         "pulse-soft": "pulse-soft 3s ease-in-out infinite",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards"
-      }
+      },
+      fontFamily: {
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(to right, var(--neon-purple), var(--neon-pink))',
+      },
+      boxShadow: {
+        'glow-sm': '0 0 5px rgba(155, 135, 245, 0.5)',
+        'glow-md': '0 0 15px rgba(155, 135, 245, 0.5)',
+        'glow-lg': '0 0 25px rgba(155, 135, 245, 0.5)',
+      },
     }
   },
   plugins: [require("tailwindcss-animate")],
