@@ -24,7 +24,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 262.1 83.3% 57.8%;
-    --radius: 1.25rem;
+    --radius: 1rem;
   }
 }
 
@@ -60,7 +60,7 @@
   }
 
   .glass-card {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-lg;
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-lg rounded-2xl;
   }
 
   .glass-nav {
@@ -124,5 +124,52 @@
 
   .bg-gradient-primary {
     background: linear-gradient(135deg, #9b87f5 0%, #f056c1 100%);
+  }
+
+  /* Card styles for mobile app look */
+  .app-card {
+    @apply bg-secondary/80 border border-white/10 rounded-xl p-4 transition-all hover:border-white/20;
+  }
+
+  .metric-card {
+    @apply app-card flex flex-col items-center justify-center p-3;
+  }
+
+  .action-card {
+    @apply app-card flex flex-row items-center gap-3 p-4;
+  }
+
+  .icon-container {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+  }
+
+  /* Feature cards for AI tools */
+  .feature-card {
+    @apply rounded-xl overflow-hidden transition-all hover:shadow-lg;
+  }
+
+  .feature-card-header {
+    @apply p-4 flex items-center gap-3;
+  }
+
+  .feature-card-icon {
+    @apply w-10 h-10 rounded-full flex items-center justify-center;
+  }
+
+  /* Stats section */
+  .stats-container {
+    @apply grid grid-cols-2 gap-4 mb-6;
+  }
+
+  .stat-item {
+    @apply glass-card p-4 text-center;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-glow;
+  }
+
+  .stat-label {
+    @apply text-xs text-muted-foreground mt-1;
   }
 }
